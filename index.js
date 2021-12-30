@@ -16,6 +16,17 @@ const Ship = (size) => {
   return ship;
 };
 
+const Player = (name, isHuman) => {
+  const player = {};
+
+  player.name = name;
+  player.isHuman = isHuman;
+
+  player.CPUplay = () => {};
+
+  return player;
+};
+
 const Gameboard = () => {
   const board = [];
   for (let i = 0; i < 10; i++) {
