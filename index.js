@@ -79,11 +79,39 @@ const Gameboard = () => {
     console.table(board);
     return true;
   };
+
+  board.areAllShipsSunk = () => {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (board[i][j] != null && board[i][j] != "w") {
+          if (board[i][j].isSunk() == false) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  };
+
   return board;
 };
 
 const board = Gameboard();
 
 const carrier = Ship(5);
-board.placeShip(6, 9, carrier, "vertical");
+const boat = Ship(2);
+
+board.placeShip(0, 2, carrier, "horizontal");
+board.placeShip(5, 5, boat, "vertical");
+
 board.receiveAttack(2, 1);
+
+board.receiveAttack(0, 2);
+board.receiveAttack(0, 3);
+board.receiveAttack(0, 4);
+board.receiveAttack(0, 5);
+board.receiveAttack(0, 6);
+
+board.receiveAttack(5, 5);
+board.receiveAttack(6, 5);
+console.log(board.areAllShipsSunk());
