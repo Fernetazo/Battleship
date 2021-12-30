@@ -1,6 +1,6 @@
-const Ship = (length) => {
+const Ship = (size) => {
   const ship = {};
-  ship.length = length;
+  ship.size = size;
   ship.hits = [];
 
   ship.hit = (position) => {
@@ -10,59 +10,80 @@ const Ship = (length) => {
   };
 
   ship.isSunk = () => {
-    return ship.length === ship.hits.length;
+    return ship.size === ship.hits.length;
   };
 
   return ship;
 };
 
-const P1 = Ship(5);
-
 const Gameboard = () => {
-  const gameboard = [];
+  const board = [];
   for (let i = 0; i < 10; i++) {
-    gameboard.push(Array(10).fill(0));
+    board.push(Array(10).fill(null));
   }
 
-  gameboard.placeHorizontal = (x, y, ship) => {
-    for (let i = 0; i < ship.length; i++) {
-      gameboard[x][y + i] = ship;
+  board.placeShip = (row, column, ship, orientation) => {
+    if (board.isPlaceable(row, column, ship, orientation)) {
+      if (orientation === "horizontal") {
+        for (let i = 0; i < ship.size; i++) {
+          board[row][column + i] = ship;
+        }
+      } else {
+        for (let i = 0; i < ship.size; i++) {
+          board[row + i][column] = ship;
+        }
+      }
     }
   };
 
-  gameboard.receiveAttack = (row, column) => {
-    if (gameboard[row][column] === 0) {
-      gameboard[row][column] = "X";
+  board.isPlaceable = (row, column, ship, orientation) => {
+    if (orientation === "horizontal") {
+      if (column + ship.size - 1 > 9) return false;
+      for (let i = 0; i < ship.size; i++) {
+        if (board[row][column + i] != null) return false;
+      }
+    } else {
+      if (row + ship.size - 1 > 9) return false;
+      for (let i = 0; i < ship.size; i++) {
+        if (board[row + i][column] != null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  board.receiveAttack = (row, column) => {
+    if (board[row][column] === null) {
+      board[row][column] = "w";
     } else {
       let position = 0;
       // is horizontal
-      if (column > 0 && gameboard[row][column - 1]) {
+      if (column > 0 && board[row][column - 1]) {
         let i = 1;
-        while (column - i >= 0 && gameboard[row][column - i]) {
+        while (column - i >= 0 && board[row][column - i]) {
           position++;
           i++;
         }
       }
       // is vertical
-      else if (row > 0 && gameboard[row - 1][column]) {
+      else if (row > 0 && board[row - 1][column]) {
         let i = 1;
-        while (row - i >= 0 && gameboard[row - i][column]) {
+        while (row - i >= 0 && board[row - i][column]) {
           position++;
           i++;
         }
       }
-      gameboard[row][column].hit(position);
+      board[row][column].hit(position);
     }
-    console.table(gameboard);
+    console.table(board);
+    return true;
   };
-  return gameboard;
+  return board;
 };
 
-const gameboard = Gameboard();
+const board = Gameboard();
 
 const carrier = Ship(5);
-const x = 2;
-const y = 2;
-const shipLength = 5;
-gameboard.placeHorizontal(x, y, carrier);
-gameboard.receiveAttack(2, 1);
+board.placeShip(6, 9, carrier, "vertical");
+board.receiveAttack(2, 1);
