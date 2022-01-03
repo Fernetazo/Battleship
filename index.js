@@ -22,7 +22,21 @@ const Player = (name, isHuman) => {
   player.name = name;
   player.isHuman = isHuman;
 
-  player.CPUplay = () => {};
+  // TO DO here: use modern functions (reduce, filter, etc.)
+  player.CPUplay = () => {
+    let CPUOptions = [];
+
+    for (let i = 0; i <= 9; i++) {
+      for (let j = 0; j <= 9; j++) {
+        if (board[i][j] == null) CPUOptions.push({ i, j });
+      }
+    }
+    let randomChoice =
+      CPUOptions[Math.floor(Math.random() * CPUOptions.length)];
+
+    // Returns {i, j} object
+    return randomChoice;
+  };
 
   return player;
 };
@@ -126,3 +140,5 @@ board.receiveAttack(0, 6);
 board.receiveAttack(5, 5);
 board.receiveAttack(6, 5);
 console.log(board.areAllShipsSunk());
+
+const CPU = Player("CPU", false);
