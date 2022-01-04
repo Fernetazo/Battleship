@@ -1,3 +1,5 @@
+import { render } from "./render.js";
+
 const Ship = (size) => {
   const ship = {};
   ship.size = size;
@@ -142,3 +144,5 @@ board.receiveAttack(6, 5);
 console.log(board.areAllShipsSunk());
 
 const CPU = Player("CPU", false);
+
+render();
