@@ -1,6 +1,5 @@
-function render() {
+function prepareDOM() {
   const grid = document.getElementsByClassName("gridContainer");
-  console.log(grid);
   for (let i = 0; i <= 99; i++) {
     const cell = document.createElement("div");
     const cell2 = document.createElement("div");
@@ -11,4 +10,4 @@ function render() {
   }
 }
 
-export { render };
+export { prepareDOM };

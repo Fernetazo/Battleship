@@ -1,3 +1,4 @@
+// S H I P
 const Ship = (size) => {
   const ship = {};
   ship.size = size;
@@ -16,6 +17,7 @@ const Ship = (size) => {
   return ship;
 };
 
+// P L A Y E R
 const Player = (name, isHuman) => {
   const player = {};
 
@@ -41,6 +43,7 @@ const Player = (name, isHuman) => {
   return player;
 };
 
+// G A M E B O A R D
 const Gameboard = () => {
   const board = [];
   for (let i = 0; i < 10; i++) {
@@ -101,7 +104,6 @@ const Gameboard = () => {
       }
       board[row][column].hit(position);
     }
-    console.table(board);
     return true;
   };
 
@@ -120,27 +122,5 @@ const Gameboard = () => {
 
   return board;
 };
-
-const board = Gameboard();
-
-const carrier = Ship(5);
-const boat = Ship(2);
-
-board.placeShip(0, 2, carrier, "horizontal");
-board.placeShip(5, 5, boat, "vertical");
-
-board.receiveAttack(2, 1);
-
-board.receiveAttack(0, 2);
-board.receiveAttack(0, 3);
-board.receiveAttack(0, 4);
-board.receiveAttack(0, 5);
-board.receiveAttack(0, 6);
-
-board.receiveAttack(5, 5);
-board.receiveAttack(6, 5);
-console.log(board.areAllShipsSunk());
-
-const CPU = Player("CPU", false);
 
 export { Ship, Player, Gameboard };
