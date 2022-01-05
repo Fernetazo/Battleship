@@ -1,5 +1,3 @@
-import { render } from "./render.js";
-
 const Ship = (size) => {
   const ship = {};
   ship.size = size;
@@ -145,4 +143,4 @@ console.log(board.areAllShipsSunk());
 
 const CPU = Player("CPU", false);
 
-render();
+export { Ship, Player, Gameboard };
