@@ -11,3 +11,35 @@
   align-items: center;
   border: solid black 1px;
 }
+
+.unknown {
+  background-color: rgb(34, 92, 7);
+}
+
+.touched {
+  background-color: rgb(255, 252, 53);
+}
+
+.water {
+  background-color: rgb(39, 133, 226);
+}
+
+.carrier {
+  background-color: rgba(128, 128, 128, 1);
+}
+
+.battleship {
+  background-color: rgba(131, 69, 69, 0.8);
+}
+
+.destroyer {
+  background-color: rgba(129, 93, 63, 0.6);
+}
+
+.submarine {
+  background-color: rgba(69, 128, 78, 0.4);
+}
+
+.patrolBoat {
+  background-color: rgba(114, 56, 128, 0.568);
+}

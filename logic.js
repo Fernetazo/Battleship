@@ -1,9 +1,7 @@
-import { prepareDOM } from "./render.js";
+import { prepareDOM, setTurn } from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
 
 function prepareGame() {
-  prepareDOM();
-
   const boardP1 = Gameboard();
   const boardP2 = Gameboard();
 
@@ -28,10 +26,20 @@ function prepareGame() {
   boardP2.placeShip(73, submarine, "horizontal");
   boardP2.placeShip(98, patrolBoat, "vertical");
 
-  boardP1.receiveAttack(98);
-  boardP1.receiveAttack(73);
-  boardP1.receiveAttack(74);
-  console.log(player2.CPUplay(boardP1));
+  prepareDOM(boardP1);
 }
 
-prepareGame();
+function sendAttack(cell) {
+  let turn = getTurn;
+  turn.receiveAttack();
+}
+
+function startGame() {
+  prepareGame();
+  let turn = "player1";
+  setTurn(turn);
+}
+
+startGame();
+
+export { sendAttack };
