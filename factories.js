@@ -89,7 +89,8 @@ const Gameboard = () => {
   board.receiveAttack = (cell) => {
     if (board[cell] === null) {
       board[cell] = "w";
-    } else {
+      return false;
+    } else if (board[cell] != "w") {
       let position = 0;
       let i = 1;
       const leftSizeofBoard = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -113,8 +114,8 @@ const Gameboard = () => {
       }
 
       board[cell].hit(position);
+      return true;
     }
-    return true;
   };
 
   board.areAllShipsSunk = () => {

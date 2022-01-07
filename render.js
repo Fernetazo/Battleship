@@ -1,4 +1,4 @@
-import { sendAttack } from "./logic.js";
+import { game } from "./logic.js";
 
 function prepareDOM(board) {
   const grid = document.getElementsByClassName("gridContainer");
@@ -27,7 +27,7 @@ function prepareDOM(board) {
 
 function clickCell(e) {
   const cell = e.target;
-  sendAttack(Array.from(cell.parentNode.children).indexOf(cell));
+  game.sendAttack(Array.from(cell.parentNode.children).indexOf(cell));
 }
 
 function setTurn(turn) {
@@ -35,4 +35,21 @@ function setTurn(turn) {
   display.textContent = `It's the turn of ${turn}`;
 }
 
-export { prepareDOM, setTurn };
+function receiveAttackDOM(cell, water) {
+  const grid = document.getElementsByClassName("gridContainer");
+  let cells = grid[1].children;
+  if (!water) {
+    cells[cell].classList.remove("unknown");
+    cells[cell].classList.add("touched");
+  } else {
+    cells[cell].classList.remove("unknown");
+    cells[cell].classList.add("water");
+  }
+}
+
+function freeze() {
+  console.log("freeze!");
+  document.querySelector(".gridContainer.P2").style = "pointer-events:none;";
+}
+
+export { prepareDOM, setTurn, receiveAttackDOM, freeze };

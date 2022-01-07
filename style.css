@@ -17,7 +17,13 @@
 }
 
 .touched {
-  background-color: rgb(255, 252, 53);
+  background: yellow;
+  background: radial-gradient(
+    circle,
+    yellow 25%,
+    rgb(34, 92, 7) 50%,
+    rgb(34, 92, 7) 100%
+  );
 }
 
 .water {
