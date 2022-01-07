@@ -28,7 +28,7 @@ const Player = (name, isHuman) => {
 
   player.CPUplay = (board) => {
     let CPUOptions = board.reduce((array, cell, index) => {
-      if (cell == null) {
+      if (cell != "w") {
         array.push(index);
       }
       return array;

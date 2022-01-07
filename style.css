@@ -26,8 +26,22 @@
   );
 }
 
+.touchedP1 {
+  background: red;
+  background: radial-gradient(
+    circle,
+    red 25%,
+    rgb(39, 133, 226) 50%,
+    rgb(39, 133, 226) 100%
+  );
+}
+
 .water {
   background-color: rgb(39, 133, 226);
+}
+
+.shot {
+  background-color: rgb(250, 142, 0);
 }
 
 .carrier {

@@ -35,21 +35,34 @@ function setTurn(turn) {
   display.textContent = `It's the turn of ${turn}`;
 }
 
-function receiveAttackDOM(cell, water) {
-  const grid = document.getElementsByClassName("gridContainer");
-  let cells = grid[1].children;
+function receiveAttackDOM(player, cell, water) {
+  const grid = document.querySelector(`.gridContainer.${player}`);
+  let cells = grid.children;
   if (!water) {
-    cells[cell].classList.remove("unknown");
-    cells[cell].classList.add("touched");
+    if (player == "P2") {
+      cells[cell].classList.remove("unknown");
+      cells[cell].classList.add("touched");
+    } else {
+      cells[cell].classList.remove([1]);
+      cells[cell].classList.add("touchedP1");
+    }
   } else {
-    cells[cell].classList.remove("unknown");
-    cells[cell].classList.add("water");
+    if (player == "P2") {
+      cells[cell].classList.remove("unknown");
+      cells[cell].classList.add("water");
+    } else {
+      cells[cell].classList.remove("water");
+      cells[cell].classList.add("shot");
+    }
   }
 }
 
 function freeze() {
-  console.log("freeze!");
   document.querySelector(".gridContainer.P2").style = "pointer-events:none;";
 }
 
-export { prepareDOM, setTurn, receiveAttackDOM, freeze };
+function unfreeze() {
+  document.querySelector(".gridContainer.P2").style = "pointer-events:auto;";
+}
+
+export { prepareDOM, setTurn, receiveAttackDOM, freeze, unfreeze };

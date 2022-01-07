@@ -1,4 +1,4 @@
-import { prepareDOM, setTurn, receiveAttackDOM, freeze } from "./render.js";
+import { prepareDOM, receiveAttackDOM, freeze, unfreeze } from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
 
 let globalTurn = null;
@@ -37,27 +37,30 @@ const game = (() => {
     return globalTurn;
   };
 
-  const startTurn = (turn) => {
-    if (turn == "player1") {
-    }
-    setTurn(turn);
-  };
-
   const sendAttack = (cell) => {
     if (game.turn() == "player1") {
       if (boardP2.receiveAttack(cell)) {
         boardP2.receiveAttack(cell);
-        receiveAttackDOM(cell);
-      } else receiveAttackDOM(cell, "w");
+        receiveAttackDOM("P2", cell);
+      } else receiveAttackDOM("P2", cell, "w");
+      game.turn("CPU");
       freeze();
     }
+    setTimeout(() => {
+      let CPUPlay = player2.CPUplay(boardP1);
+      console.log(CPUPlay);
+      if (boardP1.receiveAttack(CPUPlay)) {
+        boardP1.receiveAttack(CPUPlay);
+        receiveAttackDOM("P1", CPUPlay);
+      } else receiveAttackDOM("P1", CPUPlay, "w");
+      game.turn("player1");
+      unfreeze();
+    }, 500);
   };
 
-  return { prepare, turn, startTurn, sendAttack };
+  return { prepare, turn, sendAttack };
 })();
 
 game.prepare();
-
 game.turn("player1");
-
 export { game };
