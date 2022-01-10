@@ -27,7 +27,11 @@ function prepareDOM(board) {
 
 function clickCell(e) {
   const cell = e.target;
-  game.sendAttack(Array.from(cell.parentNode.children).indexOf(cell));
+  const grid = Array.from(cell.parentNode.children);
+
+  if (cell.classList[1] == "unknown") {
+    game.sendAttack(grid.indexOf(cell));
+  }
 }
 
 function setTurn(turn) {
@@ -38,21 +42,22 @@ function setTurn(turn) {
 function receiveAttackDOM(player, cell, water) {
   const grid = document.querySelector(`.gridContainer.${player}`);
   let cells = grid.children;
-  if (!water) {
-    if (player == "P2") {
-      cells[cell].classList.remove("unknown");
-      cells[cell].classList.add("touched");
-    } else {
-      cells[cell].classList.remove([1]);
-      cells[cell].classList.add("touchedP1");
-    }
-  } else {
-    if (player == "P2") {
-      cells[cell].classList.remove("unknown");
-      cells[cell].classList.add("water");
-    } else {
+  if (water) {
+    if (player == "P1") {
       cells[cell].classList.remove("water");
       cells[cell].classList.add("shot");
+    } else {
+      cells[cell].classList.remove("unknown");
+      cells[cell].classList.add("water");
+    }
+  } else {
+    if (player == "P1") {
+      // Can remove ship type class from the cell.
+      //cells[cell].classList.remove(cells[cell].classList[1]);
+      cells[cell].classList.add("touchedP1");
+    } else {
+      cells[cell].classList.remove("unknown");
+      cells[cell].classList.add("touched");
     }
   }
 }
