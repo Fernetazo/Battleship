@@ -44,6 +44,14 @@
   background-color: rgb(250, 142, 0);
 }
 
+.carrier,
+.battleship,
+.destroyer,
+.submarine,
+.patrolBoat {
+  border: solid 1px yellow;
+}
+
 .carrier {
   background-color: rgba(128, 128, 128, 1);
 }

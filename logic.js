@@ -1,4 +1,11 @@
-import { prepareDOM, receiveAttackDOM, freeze, unfreeze } from "./render.js";
+import {
+  prepareCellsListenersDOM,
+  placeAllShipsDOM,
+  removeListeners,
+  receiveAttackDOM,
+  freeze,
+  unfreeze,
+} from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
 
 let globalTurn = null;
@@ -15,13 +22,11 @@ const destroyer = Ship(3, "destroyer");
 const submarine = Ship(2, "submarine");
 const patrolBoat = Ship(1, "patrolBoat");
 
+const arrayShips = [carrier, battleship, destroyer, submarine, patrolBoat];
+
 const game = (() => {
   const prepare = () => {
-    /*boardP1.placeShip(0, carrier, "horizontal");
-    boardP1.placeShip(9, battleship, "vertical");
-    boardP1.placeShip(31, destroyer, "vertical");
-    boardP1.placeShip(73, submarine, "horizontal");*/
-    boardP1.placeShip(98, patrolBoat, "vertical");
+    prepareCellsListenersDOM();
     /*
     boardP2.placeShip(0, carrier, "horizontal");
     boardP2.placeShip(15, battleship, "horizontal");
@@ -29,7 +34,24 @@ const game = (() => {
     boardP2.placeShip(73, submarine, "horizontal");
     boardP2.placeShip(98, patrolBoat, "vertical");
 
-    prepareDOM(boardP1);
+    placeAllShipsDOM(boardP1);
+  };
+
+  const prepareShip = (cell, orientation) => {
+    //TODO: check for true isplaceable (watch out bottom line, and other cells with ships)
+    if (boardP1.isPlaceable(cell, arrayShips[0], orientation)) {
+      const ship = arrayShips.shift();
+      boardP1.placeShip(cell, ship, orientation);
+      placeAllShipsDOM(boardP1); // This should update the ship, not all the board
+      if (arrayShips.length == 0) {
+        removeListeners();
+        unfreeze();
+        console.log("Game starto!");
+        //TODO startGame();
+      }
+    } else {
+      console.log(`Can't place ship there.`);
+    }
   };
 
   const turn = (player) => {
@@ -43,8 +65,10 @@ const game = (() => {
         if (boardP2.receiveAttack(cell)) {
           boardP2.receiveAttack(cell);
           receiveAttackDOM("P2", cell);
+
+          //TODO: check for true win
           if (boardP2.areAllShipsSunk()) {
-            console.log("Player 1 WINS!!!"); //TODO: Ship manual placement
+            console.log("Player 1 WINS!!!");
             freeze();
           }
         } else receiveAttackDOM("P2", cell, "w");
@@ -68,9 +92,10 @@ const game = (() => {
     }, 500);
   };
 
-  return { prepare, turn, sendAttack };
+  return { prepare, prepareShip, turn, sendAttack };
 })();
 
+//game.placeShips();
 game.prepare();
 game.turn("player1");
 export { game };
