@@ -29,6 +29,7 @@ function clickCell(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
 
+  // TODO: This should be in logic part
   if (cell.classList[1] == "unknown") {
     game.sendAttack(grid.indexOf(cell));
   }
