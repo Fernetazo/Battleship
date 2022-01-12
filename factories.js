@@ -71,6 +71,12 @@ const Gameboard = () => {
     }
 
     if (orientation === "horizontal") {
+      if (cell + ship.size >= 100) return false;
+
+      for (let i = 0; i <= ship.size - 1; i++) {
+        if (board[cell + i] != null) return false;
+      }
+
       let currentCell = cell;
       for (let i = 0; i <= ship.size - 2; i++) {
         if (
@@ -82,6 +88,10 @@ const Gameboard = () => {
       }
     } else {
       if (cell + (ship.size - 1) * 10 >= 100) return false;
+
+      for (let i = 0; i <= ship.size - 1; i++) {
+        if (board[cell + 10 * i] != null) return false;
+      }
     }
     return true;
   };

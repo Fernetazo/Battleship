@@ -23,7 +23,7 @@ function displayToPlaceDOM(ship) {
 function placeShipDOM(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
-  const orientation = "horizontal"; //Should add a DOM button for user select mode, vertical or horizontal
+  const orientation = "vertical"; //Should add a DOM button for user select mode, vertical or horizontal
   game.prepareShip(grid.indexOf(cell), orientation);
 }
 
