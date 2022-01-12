@@ -87,35 +87,30 @@ const Gameboard = () => {
   };
 
   board.receiveAttack = (cell) => {
-    if (board[cell] === null) {
-      board[cell] = "w";
-      return false;
-    } else if (board[cell] != "w") {
-      let position = 0;
-      let i = 1;
-      const leftSizeofBoard = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-      // HORIZONTAL
-      if (!leftSizeofBoard.includes(cell) && board[cell - i]) {
-        while (
-          board[cell - i] != undefined &&
-          board[cell].type == board[cell - i].type
-        ) {
-          position++;
-          i++;
-        }
-      } else if (cell >= 10 && board[cell - i * 10]) {
-        while (
-          board[cell - i * 10] != undefined &&
-          board[cell].type == board[cell - i * 10].type
-        ) {
-          position++;
-          i++;
-        }
+    let position = 0;
+    let i = 1;
+    const leftSizeofBoard = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    // HORIZONTAL
+    if (!leftSizeofBoard.includes(cell) && board[cell - i]) {
+      while (
+        board[cell - i] != undefined &&
+        board[cell].type == board[cell - i].type
+      ) {
+        position++;
+        i++;
       }
-
-      board[cell].hit(position);
-      return true;
+    } else if (cell >= 10 && board[cell - i * 10]) {
+      while (
+        board[cell - i * 10] != undefined &&
+        board[cell].type == board[cell - i * 10].type
+      ) {
+        position++;
+        i++;
+      }
     }
+
+    board[cell].hit(position);
+    return true;
   };
 
   board.areAllShipsSunk = () => {

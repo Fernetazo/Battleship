@@ -29,10 +29,10 @@ const game = (() => {
     prepareCellsListenersDOM();
     /*
     boardP2.placeShip(0, carrier, "horizontal");
-    boardP2.placeShip(15, battleship, "horizontal");
-    boardP2.placeShip(34, destroyer, "vertical");*/
-    boardP2.placeShip(73, submarine, "horizontal");
-    boardP2.placeShip(98, patrolBoat, "vertical");
+    boardP2.placeShip(15, battleship, "horizontal");*/
+    boardP2.placeShip(86, battleship, "horizontal");
+    boardP2.placeShip(97, submarine, "horizontal");
+    //boardP2.placeShip(98, patrolBoat, "vertical");
 
     placeAllShipsDOM(boardP1);
   };
@@ -62,7 +62,10 @@ const game = (() => {
   const sendAttack = (cell) => {
     if (game.turn() == "player1") {
       {
-        if (boardP2.receiveAttack(cell)) {
+        if (boardP2[cell] === null) {
+          boardP2[cell] = "w";
+          receiveAttackDOM("P2", cell, "w");
+        } else if (boardP2[cell].type) {
           boardP2.receiveAttack(cell);
           receiveAttackDOM("P2", cell);
 
@@ -71,22 +74,25 @@ const game = (() => {
             console.log("Player 1 WINS!!!");
             freeze();
           }
-        } else receiveAttackDOM("P2", cell, "w");
-
+        }
         game.turn("CPU");
         freeze();
       }
     }
     setTimeout(() => {
       let CPUPlay = player2.CPUplay(boardP1);
-      if (boardP1.receiveAttack(CPUPlay)) {
+
+      if (boardP1[CPUPlay] === null) {
+        boardP1[CPUPlay] = "w";
+        receiveAttackDOM("P1", CPUPlay, "w");
+      } else if (boardP1[CPUPlay].type) {
         boardP1.receiveAttack(CPUPlay);
         receiveAttackDOM("P1", CPUPlay);
         if (boardP1.areAllShipsSunk()) {
           console.log("Player 2 WINS!!!");
           return;
         }
-      } else receiveAttackDOM("P1", CPUPlay, "w");
+      }
       game.turn("player1");
       unfreeze();
     }, 500);
