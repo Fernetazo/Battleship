@@ -3,26 +3,35 @@
   <head>
     <title>Battleship</title>
     <meta charset="UTF-8" />
-    <script  src="logic.js" type="module" defer></script>
+    <script src="logic.js" type="module" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-
     <main>
-      <div class='display'></div>
-      <div>Player 1</div>
-      <div class="gridContainer P1">
+      <div class="display"></div>
+
+      <div class="playerIndicatorContainer">
+        <div>Player 1</div>
+        <div>CPU radar</div>
       </div>
-      <div>CPU radar</div>
-      <div class="gridContainer P2">
+
+      <div class="gridsContainer">
+        <div class="gridContainer P1"></div>
+        <div class="gridContainer P2"></div>
+      </div>
+      <div class="optionsContainer">
+        <p>Toggle ship orientation</p>
+        <button type="button" class="orientationButton">Vertical</button>
       </div>
     </main>
 
     <footer>
       <h5>
-        Code by Fernetazo<a href="https://github.com/Fernetazo/Battleship"
-        <img src="GitHubIcon.png" alt="Git Hub icon" /></a>
+        <a>Code by Fernetazo</a>
+        <a href="https://github.com/Fernetazo/Battleship">
+          <img src="GitHubIcon.png" alt="Git Hub icon" />
+        </a>
       </h5>
     </footer>
   </body>

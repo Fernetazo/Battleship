@@ -2,12 +2,15 @@
 // TODO: Check for random ship allocated correctly
 
 import {
+  prepareToggleButton,
+  hideOptions,
   prepareCellsListenersDOM,
   placeAllShipsDOM,
   removeListeners,
   receiveAttackDOM,
   freeze,
   unfreeze,
+  showWinner,
 } from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
 
@@ -31,13 +34,10 @@ const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
 
-    /*boardP2.placeShip(0, carrier, "horizontal");
-    boardP2.placeShip(15, battleship, "horizontal");
-    boardP2.placeShip(86, battleship, "horizontal");
-    boardP2.placeShip(97, submarine, "horizontal");
-    boardP2.placeShip(99, patrolBoat, "vertical");*/
-    boardP2.placeShipsRandomly(boardP2, arrayShips);
-    console.table(boardP2);
+    boardP2.placeShip(0, carrier, "Horizontal");
+    boardP2.placeShip(99, patrolBoat, "Vertical");
+
+    //boardP2.placeShipsRandomly(boardP2, arrayShips);
 
     placeAllShipsDOM(boardP1);
   };
@@ -46,11 +46,12 @@ const game = (() => {
     if (boardP1.isPlaceable(cell, arrayShips[0], orientation)) {
       const ship = arrayShips.shift();
       boardP1.placeShip(cell, ship, orientation);
-      placeAllShipsDOM(boardP1); // This should update the ship, not all the board
+      placeAllShipsDOM(boardP1); // This should update the ship, not all the board. But it works.
       if (arrayShips.length == 0) {
         removeListeners();
         unfreeze();
         console.log("Game starto!");
+        hideOptions();
         //TODO startGame();
       }
     } else {
@@ -74,7 +75,7 @@ const game = (() => {
           receiveAttackDOM("P2", cell);
 
           if (boardP2.areAllShipsSunk()) {
-            console.log("Player 1 WINS!!!");
+            showWinner(player1.name);
             freeze();
             return; //TODO: Option to restart the game
           }
@@ -93,7 +94,7 @@ const game = (() => {
         boardP1.receiveAttack(CPUPlay);
         receiveAttackDOM("P1", CPUPlay);
         if (boardP1.areAllShipsSunk()) {
-          console.log("Player 2 WINS!!!");
+          showWinner(player2.name);
           return;
         }
       }
@@ -102,10 +103,16 @@ const game = (() => {
     }, 500);
   };
 
-  return { prepare, prepareShip, turn, sendAttack };
+  const reset = () => {
+    alert("TODO!");
+  };
+
+  return { prepare, prepareShip, turn, sendAttack, reset };
 })();
 
 //game.placeShips();
 game.prepare();
 game.turn("player1");
+prepareToggleButton();
+
 export { game };

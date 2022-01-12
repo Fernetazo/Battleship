@@ -1,5 +1,19 @@
 import { game } from "./logic.js";
 
+function prepareToggleButton() {
+  const button = document.querySelector(".orientationButton");
+  button.addEventListener("click", () => {
+    button.textContent == "Vertical"
+      ? (button.textContent = "Horizontal")
+      : (button.textContent = "Vertical");
+  });
+}
+
+function hideOptions() {
+  const div = document.querySelector(".optionsContainer");
+  div.style.visibility = "hidden";
+}
+
 function prepareCellsListenersDOM() {
   const grid = document.getElementsByClassName("gridContainer");
   freeze();
@@ -20,10 +34,20 @@ function displayToPlaceDOM(ship) {
   display.textContent = `You have to place a ${ship.type}`;
 }
 
+function showWinner(player) {
+  const display = document.querySelector(".display");
+  display.textContent = `The winner is ${player}!`;
+
+  const resetButton = document.createElement("button");
+  resetButton.textContent = "Reset game";
+  resetButton.addEventListener("click", game.reset);
+  display.appendChild(resetButton);
+}
+
 function placeShipDOM(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
-  const orientation = "vertical"; //TODO: Should add a DOM button for user select mode, vertical or horizontal
+  const orientation = document.querySelector(".orientationButton").textContent; //TODO: Should add a DOM button for user select mode, vertical or horizontal
   game.prepareShip(grid.indexOf(cell), orientation);
 }
 
@@ -94,6 +118,8 @@ function unfreeze() {
 }
 
 export {
+  prepareToggleButton,
+  hideOptions,
   prepareCellsListenersDOM,
   displayToPlaceDOM,
   placeAllShipsDOM,
@@ -102,4 +128,5 @@ export {
   freeze,
   unfreeze,
   removeListeners,
+  showWinner,
 };

@@ -7,6 +7,8 @@ const Ship = (size, type) => {
   ship.type = type;
 
   ship.hit = (position) => {
+    //console.log("ship.size: ", ship.size);
+    //console.log("ship.hits.length: ", ship.hits.length);
     if (!ship.hits.includes(position)) {
       ship.hits.push(position);
     }
@@ -49,7 +51,7 @@ const Gameboard = () => {
 
   board.placeShip = (cell, ship, orientation) => {
     if (board.isPlaceable(cell, ship, orientation)) {
-      if (orientation === "horizontal") {
+      if (orientation === "Horizontal") {
         for (let i = 0; i < ship.size; i++) {
           board[cell + i] = ship;
         }
@@ -70,7 +72,7 @@ const Gameboard = () => {
       return false;
     }
 
-    if (orientation === "horizontal") {
+    if (orientation === "Horizontal") {
       if (cell + ship.size >= 100) return false;
 
       for (let i = 0; i <= ship.size - 1; i++) {
@@ -97,7 +99,7 @@ const Gameboard = () => {
   };
 
   board.placeShipsRandomly = (board, arrayShips) => {
-    const orientation = ["vertical", "horizontal"];
+    const orientation = ["Vertical", "Horizontal"];
     let randomOri = Math.floor(Math.random() * 2);
     let randomCell = Math.floor(Math.random() * 100);
 

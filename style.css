@@ -1,3 +1,15 @@
+body {
+  background-color: grey;
+}
+
+.playerIndicatorContainer {
+  display: flex;
+}
+
+.gridsContainer {
+  display: flex;
+}
+
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(10, 20px);
@@ -49,7 +61,7 @@
 .destroyer,
 .submarine,
 .patrolBoat {
-  border: solid 1px yellow;
+  border: solid 2px yellow;
 }
 
 .carrier {
