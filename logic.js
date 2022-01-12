@@ -27,12 +27,12 @@ const arrayShips = [carrier, battleship, destroyer, submarine, patrolBoat];
 const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
-    /*
+
     boardP2.placeShip(0, carrier, "horizontal");
-    boardP2.placeShip(15, battleship, "horizontal");*/
+    /*boardP2.placeShip(15, battleship, "horizontal");
     boardP2.placeShip(86, battleship, "horizontal");
-    boardP2.placeShip(97, submarine, "horizontal");
-    //boardP2.placeShip(98, patrolBoat, "vertical");
+    boardP2.placeShip(97, submarine, "horizontal");*/
+    boardP2.placeShip(99, patrolBoat, "vertical");
 
     placeAllShipsDOM(boardP1);
   };
@@ -69,7 +69,6 @@ const game = (() => {
           boardP2.receiveAttack(cell);
           receiveAttackDOM("P2", cell);
 
-          //TODO: check for true win
           if (boardP2.areAllShipsSunk()) {
             console.log("Player 1 WINS!!!");
             freeze();

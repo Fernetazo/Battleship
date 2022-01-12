@@ -7,7 +7,7 @@ const Ship = (size, type) => {
   ship.type = type;
 
   ship.hit = (position) => {
-    if (ship.hits[position] == null) {
+    if (!ship.hits.includes(position)) {
       ship.hits.push(position);
     }
   };
@@ -116,6 +116,8 @@ const Gameboard = () => {
   board.areAllShipsSunk = () => {
     for (let i = 0; i <= 99; i++) {
       if (board[i] != null && board[i] != "w") {
+        if (board[i].isSunk() == false) {
+        }
         if (board[i].isSunk() == false) {
           return false;
         }
