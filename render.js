@@ -2,7 +2,7 @@ import { game } from "./logic.js";
 
 function prepareCellsListenersDOM() {
   const grid = document.getElementsByClassName("gridContainer");
-  freeze(); // TODO: Verify
+  freeze();
   for (let i = 0; i <= 99; i++) {
     const cell = document.createElement("div");
     const cell2 = document.createElement("div");
@@ -23,7 +23,7 @@ function displayToPlaceDOM(ship) {
 function placeShipDOM(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
-  const orientation = "vertical"; //Should add a DOM button for user select mode, vertical or horizontal
+  const orientation = "vertical"; //TODO: Should add a DOM button for user select mode, vertical or horizontal
   game.prepareShip(grid.indexOf(cell), orientation);
 }
 

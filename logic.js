@@ -1,3 +1,6 @@
+// TODO: Sometimes, the win condition doesnt work, or fires too early
+// TODO: Check for random ship allocated correctly
+
 import {
   prepareCellsListenersDOM,
   placeAllShipsDOM,
@@ -28,17 +31,18 @@ const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
 
-    boardP2.placeShip(0, carrier, "horizontal");
-    /*boardP2.placeShip(15, battleship, "horizontal");
+    /*boardP2.placeShip(0, carrier, "horizontal");
+    boardP2.placeShip(15, battleship, "horizontal");
     boardP2.placeShip(86, battleship, "horizontal");
-    boardP2.placeShip(97, submarine, "horizontal");*/
-    boardP2.placeShip(99, patrolBoat, "vertical");
+    boardP2.placeShip(97, submarine, "horizontal");
+    boardP2.placeShip(99, patrolBoat, "vertical");*/
+    boardP2.placeShipsRandomly(boardP2, arrayShips);
+    console.table(boardP2);
 
     placeAllShipsDOM(boardP1);
   };
 
   const prepareShip = (cell, orientation) => {
-    //TODO: check for true isplaceable (watch out bottom line, and other cells with ships)
     if (boardP1.isPlaceable(cell, arrayShips[0], orientation)) {
       const ship = arrayShips.shift();
       boardP1.placeShip(cell, ship, orientation);
@@ -50,7 +54,7 @@ const game = (() => {
         //TODO startGame();
       }
     } else {
-      console.log(`Can't place ship there.`);
+      console.log(`Can't place ship there.`); //TODO: Something in DOM
     }
   };
 
@@ -72,6 +76,7 @@ const game = (() => {
           if (boardP2.areAllShipsSunk()) {
             console.log("Player 1 WINS!!!");
             freeze();
+            return; //TODO: Option to restart the game
           }
         }
         game.turn("CPU");

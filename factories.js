@@ -96,6 +96,22 @@ const Gameboard = () => {
     return true;
   };
 
+  board.placeShipsRandomly = (board, arrayShips) => {
+    const orientation = ["vertical", "horizontal"];
+    let randomOri = Math.floor(Math.random() * 2);
+    let randomCell = Math.floor(Math.random() * 100);
+
+    for (let i = 0; i <= 4; i++) {
+      while (
+        !board.isPlaceable(randomCell, arrayShips[i], orientation[randomOri])
+      ) {
+        randomOri = Math.floor(Math.random() * 2);
+        randomCell = Math.floor(Math.random() * 100);
+      }
+      board.placeShip(randomCell, arrayShips[i], orientation[randomOri]);
+    }
+  };
+
   board.receiveAttack = (cell) => {
     let position = 0;
     let i = 1;
