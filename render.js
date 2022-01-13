@@ -18,7 +18,6 @@ function toggleOptions() {
 
 function prepareCellsListenersDOM() {
   const grid = document.getElementsByClassName("gridContainer");
-  freeze();
   for (let i = 0; i <= 99; i++) {
     const cell = document.createElement("div");
     const cell2 = document.createElement("div");
@@ -129,16 +128,11 @@ function receiveAttackDOM(player, cell, water) {
   }
 }
 
-function removeListeners() {
-  document.querySelector(".gridContainer.P1").style = "pointer-events:none;";
-}
-
-function freeze() {
-  document.querySelector(".gridContainer.P2").style = "pointer-events:none;";
-}
-
-function unfreeze() {
-  document.querySelector(".gridContainer.P2").style = "pointer-events:auto;";
+function toggleFreeze(playerBoard) {
+  let board = document.querySelector(`.gridContainer.${playerBoard}`);
+  board.style.pointerEvents == "none"
+    ? (board.style.pointerEvents = "auto")
+    : (board.style.pointerEvents = "none");
 }
 
 export {
@@ -150,9 +144,7 @@ export {
   placeAllShipsDOM,
   setTurn,
   receiveAttackDOM,
-  freeze,
-  unfreeze,
-  removeListeners,
+  toggleFreeze,
   displayTurn,
   showWinner,
   resetBoards,

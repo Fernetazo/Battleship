@@ -7,10 +7,8 @@ import {
   toggleOptions,
   prepareCellsListenersDOM,
   placeAllShipsDOM,
-  removeListeners,
   receiveAttackDOM,
-  freeze,
-  unfreeze,
+  toggleFreeze,
   displayTurn,
   showWinner,
   resetBoards,
@@ -51,8 +49,9 @@ const game = (() => {
       placeAllShipsDOM(boardP1); // This should update the ship, not all the board. But it works.
 
       if (arrayShips.length == 0) {
-        removeListeners();
-        unfreeze();
+        toggleFreeze("P1");
+        toggleFreeze("P2");
+
         toggleOptions();
         game.turn(player1);
 
@@ -85,12 +84,12 @@ const game = (() => {
 
           if (boardP2.areAllShipsSunk()) {
             showWinner(player1.name);
-            freeze();
+            toggleFreeze("P2");
             return; // TODO: Option to restart the game
           }
         }
         game.turn(player2);
-        freeze();
+        toggleFreeze("P2");
       }
     }
     setTimeout(() => {
@@ -108,7 +107,7 @@ const game = (() => {
         }
       }
       game.turn(player1);
-      unfreeze();
+      toggleFreeze("P2");
     }, 500);
   };
 
@@ -132,6 +131,7 @@ const game = (() => {
   return { prepare, prepareShip, turn, sendAttack, reset };
 })();
 
+toggleFreeze("P2");
 prepareToggleButton();
 game.prepare();
 displayToPlaceDOM(arrayShips[0]);
