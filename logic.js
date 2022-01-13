@@ -4,7 +4,7 @@
 import {
   displayToPlaceDOM,
   prepareToggleButton,
-  hideOptions,
+  toggleOptions,
   prepareCellsListenersDOM,
   placeAllShipsDOM,
   removeListeners,
@@ -13,6 +13,7 @@ import {
   unfreeze,
   displayTurn,
   showWinner,
+  resetBoards,
 } from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
 
@@ -36,8 +37,7 @@ const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
 
-    boardP2.placeShip(0, carrier, "Horizontal");
-    boardP2.placeShip(99, patrolBoat, "Vertical");
+    boardP2.placeShip(0, submarine, "Horizontal");
 
     //boardP2.placeShipsRandomly(boardP2, arrayShips);
 
@@ -53,7 +53,9 @@ const game = (() => {
       if (arrayShips.length == 0) {
         removeListeners();
         unfreeze();
-        hideOptions();
+        toggleOptions();
+        game.turn(player1);
+
         return;
         // TODO startGame();
       }
@@ -111,7 +113,20 @@ const game = (() => {
   };
 
   const reset = () => {
-    alert("TODO!");
+    arrayShips.push(carrier, battleship, destroyer, submarine, patrolBoat);
+
+    for (let i = 0; i <= 4; i++) {
+      arrayShips[i].hits = [];
+    }
+
+    boardP1.reset();
+    boardP2.reset();
+
+    game.turn(player1);
+
+    resetBoards();
+    toggleOptions();
+    displayToPlaceDOM(arrayShips[0]);
   };
 
   return { prepare, prepareShip, turn, sendAttack, reset };
@@ -119,7 +134,6 @@ const game = (() => {
 
 prepareToggleButton();
 game.prepare();
-game.turn(player1);
 displayToPlaceDOM(arrayShips[0]);
 
 export { game };

@@ -9,9 +9,11 @@ function prepareToggleButton() {
   });
 }
 
-function hideOptions() {
-  const div = document.querySelector(".optionsContainer");
-  div.style.visibility = "hidden";
+function toggleOptions() {
+  const optionsContainer = document.querySelector(".optionsContainer");
+  optionsContainer.style.visibility == "hidden"
+    ? (optionsContainer.style.visibility = "visible")
+    : (optionsContainer.style.visibility = "hidden");
 }
 
 function prepareCellsListenersDOM() {
@@ -82,6 +84,23 @@ function placeAllShipsDOM(board) {
   Array.from(cells).forEach((e) => e.classList.add("unknown"));
 }
 
+function resetBoards() {
+  const grid = document.getElementsByClassName("gridContainer");
+  let cells;
+
+  cells = grid[0].children;
+  Array.from(cells).forEach((e) => {
+    e.className = "";
+    e.classList.add("cell", "water");
+  });
+
+  cells = grid[1].children;
+  Array.from(cells).forEach((e) => {
+    e.className = "";
+    e.classList.add("cell", "unknown");
+  });
+}
+
 function setTurn(turn) {
   let display = document.querySelector(".display");
   display.textContent = `It's the turn of ${turn}`;
@@ -125,7 +144,7 @@ function unfreeze() {
 export {
   displayToPlaceDOM,
   prepareToggleButton,
-  hideOptions,
+  toggleOptions,
   prepareCellsListenersDOM,
   displayToPlaceDOM,
   placeAllShipsDOM,
@@ -136,4 +155,5 @@ export {
   removeListeners,
   displayTurn,
   showWinner,
+  resetBoards,
 };

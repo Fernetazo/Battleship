@@ -49,6 +49,12 @@ const Player = (name, isHuman) => {
 const Gameboard = () => {
   const board = Array(100).fill(null);
 
+  board.reset = () => {
+    for (let i = 0; i < 100; i++) {
+      board[i] = null;
+    }
+  };
+
   board.placeShip = (cell, ship, orientation) => {
     if (board.isPlaceable(cell, ship, orientation)) {
       if (orientation === "Horizontal") {
