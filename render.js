@@ -34,6 +34,11 @@ function displayToPlaceDOM(ship) {
   display.textContent = `You have to place a ${ship.type}`;
 }
 
+function displayTurn(player) {
+  const display = document.querySelector(".display");
+  display.textContent = `It's the turn of ${player.name}`;
+}
+
 function showWinner(player) {
   const display = document.querySelector(".display");
   display.textContent = `The winner is ${player}!`;
@@ -118,6 +123,7 @@ function unfreeze() {
 }
 
 export {
+  displayToPlaceDOM,
   prepareToggleButton,
   hideOptions,
   prepareCellsListenersDOM,
@@ -128,5 +134,6 @@ export {
   freeze,
   unfreeze,
   removeListeners,
+  displayTurn,
   showWinner,
 };

@@ -2,6 +2,7 @@
 // TODO: Check for random ship allocated correctly
 
 import {
+  displayToPlaceDOM,
   prepareToggleButton,
   hideOptions,
   prepareCellsListenersDOM,
@@ -10,6 +11,7 @@ import {
   receiveAttackDOM,
   freeze,
   unfreeze,
+  displayTurn,
   showWinner,
 } from "./render.js";
 import { Ship, Player, Gameboard } from "./factories.js";
@@ -47,25 +49,30 @@ const game = (() => {
       const ship = arrayShips.shift();
       boardP1.placeShip(cell, ship, orientation);
       placeAllShipsDOM(boardP1); // This should update the ship, not all the board. But it works.
+
       if (arrayShips.length == 0) {
         removeListeners();
         unfreeze();
-        console.log("Game starto!");
         hideOptions();
-        //TODO startGame();
+        return;
+        // TODO startGame();
       }
+      displayToPlaceDOM(arrayShips[0]);
     } else {
       console.log(`Can't place ship there.`); //TODO: Something in DOM
     }
   };
 
   const turn = (player) => {
-    if (player) globalTurn = player;
+    if (player) {
+      globalTurn = player;
+      displayTurn(player);
+    }
     return globalTurn;
   };
 
   const sendAttack = (cell) => {
-    if (game.turn() == "player1") {
+    if (game.turn() == player1) {
       {
         if (boardP2[cell] === null) {
           boardP2[cell] = "w";
@@ -77,10 +84,10 @@ const game = (() => {
           if (boardP2.areAllShipsSunk()) {
             showWinner(player1.name);
             freeze();
-            return; //TODO: Option to restart the game
+            return; // TODO: Option to restart the game
           }
         }
-        game.turn("CPU");
+        game.turn(player2);
         freeze();
       }
     }
@@ -98,7 +105,7 @@ const game = (() => {
           return;
         }
       }
-      game.turn("player1");
+      game.turn(player1);
       unfreeze();
     }, 500);
   };
@@ -110,9 +117,9 @@ const game = (() => {
   return { prepare, prepareShip, turn, sendAttack, reset };
 })();
 
-//game.placeShips();
-game.prepare();
-game.turn("player1");
 prepareToggleButton();
+game.prepare();
+game.turn(player1);
+displayToPlaceDOM(arrayShips[0]);
 
 export { game };
