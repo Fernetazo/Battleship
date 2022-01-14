@@ -1,8 +1,5 @@
 // TODO: Sometimes, the win condition doesnt work, or fires too early
 // TODO: Check for random ship allocated correctly
-// TODO: Check for randomly put ships (check nearness between ships)
-// TODO: Try to shrink function to check near ship
-// TODO: Check for borders and near ships functions
 
 import {
   displayToPlaceDOM,

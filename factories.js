@@ -70,25 +70,20 @@ const Gameboard = () => {
   };
 
   board.isPlaceable = (cell, ship, orientation) => {
-    const notPlaceable = [
-      9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90,
-    ];
-
-    const leftWall = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-    const rightWall = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
-
+    // Check selected cell
     if (board[cell] != null) {
       return false;
     }
 
-    // H O R I Z O N T A L
+    // HORIZONTAL
     if (orientation === "Horizontal") {
+      // Check out of border (left bottom cell)
       if (cell + ship.size - 1 >= 100) return false;
 
-      for (let i = 0; i <= ship.size - 1; i++) {
-        if (board[cell + i] != null) return false;
-      }
-
+      // Check out of border (right side)
+      const notPlaceable = [
+        9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90,
+      ];
       let currentCell = cell;
       for (let i = 0; i <= ship.size - 2; i++) {
         if (
@@ -98,7 +93,10 @@ const Gameboard = () => {
           return false;
         else currentCell += 1;
       }
-      // Check near ships in horizontal
+
+      // Check near ships
+      const leftWall = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+      const rightWall = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
       let iPlus = 0;
       let iLimit = 0;
 
@@ -116,14 +114,14 @@ const Gameboard = () => {
         }
       }
 
-      // V E R T I C A L
+      // VERTICAL
     } else {
+      // Check out of border (bottom)
       if (cell + (ship.size - 1) * 10 >= 100) return false;
 
-      for (let i = 0; i <= ship.size - 1; i++) {
-        if (board[cell + 10 * i] != null) return false;
-      }
-
+      // Check near ships
+      const leftWall = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+      const rightWall = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
       let jPlus = 0;
       let jLimit = 0;
 
@@ -134,13 +132,14 @@ const Gameboard = () => {
       if (rightWall.includes(cell)) {
         jLimit = -1;
       }
-      // Check near ships in vertical
       for (let j = -1 + jPlus; j <= 1 + jLimit; j++) {
         for (let i = -10; i <= ship.size * 10; i += 10) {
           if (board[cell + j + i] != null) return false;
         }
       }
     }
+
+    // Everything is alright! Can place the ship
     return true;
   };
 
