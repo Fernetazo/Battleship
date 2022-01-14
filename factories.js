@@ -74,12 +74,16 @@ const Gameboard = () => {
       9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90,
     ];
 
+    const leftWall = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    const rightWall = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+
     if (board[cell] != null) {
       return false;
     }
 
+    // H O R I Z O N T A L
     if (orientation === "Horizontal") {
-      if (cell + ship.size >= 100) return false;
+      if (cell + ship.size - 1 >= 100) return false;
 
       for (let i = 0; i <= ship.size - 1; i++) {
         if (board[cell + i] != null) return false;
@@ -92,13 +96,49 @@ const Gameboard = () => {
           notPlaceable.includes(currentCell + 1)
         )
           return false;
-        else currentCell = currentCell + 1;
+        else currentCell += 1;
       }
+      // Check near ships in horizontal
+      let iPlus = 0;
+      let iLimit = 0;
+
+      if (leftWall.includes(cell)) {
+        iPlus = 1;
+      }
+
+      if (rightWall.includes(cell + ship.size - 1)) {
+        iLimit = -1;
+      }
+
+      for (let j = -10; j <= 10; j += 10) {
+        for (let i = -1 + iPlus; i <= ship.size + iLimit; i++) {
+          if (board[cell + j + i] != null) return false;
+        }
+      }
+
+      // V E R T I C A L
     } else {
       if (cell + (ship.size - 1) * 10 >= 100) return false;
 
       for (let i = 0; i <= ship.size - 1; i++) {
         if (board[cell + 10 * i] != null) return false;
+      }
+
+      let jPlus = 0;
+      let jLimit = 0;
+
+      if (leftWall.includes(cell)) {
+        jPlus = 1;
+      }
+
+      if (rightWall.includes(cell)) {
+        jLimit = -1;
+      }
+      // Check near ships in vertical
+      for (let j = -1 + jPlus; j <= 1 + jLimit; j++) {
+        for (let i = -10; i <= ship.size * 10; i += 10) {
+          if (board[cell + j + i] != null) return false;
+        }
       }
     }
     return true;

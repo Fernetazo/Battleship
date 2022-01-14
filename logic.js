@@ -1,5 +1,8 @@
 // TODO: Sometimes, the win condition doesnt work, or fires too early
 // TODO: Check for random ship allocated correctly
+// TODO: Check for randomly put ships (check nearness between ships)
+// TODO: Try to shrink function to check near ship
+// TODO: Check for borders and near ships functions
 
 import {
   displayToPlaceDOM,
@@ -36,7 +39,6 @@ const game = (() => {
     prepareCellsListenersDOM();
 
     boardP2.placeShip(0, submarine, "Horizontal");
-
     //boardP2.placeShipsRandomly(boardP2, arrayShips);
 
     placeAllShipsDOM(boardP1);
@@ -56,11 +58,10 @@ const game = (() => {
         game.turn(player1);
 
         return;
-        // TODO startGame();
       }
       displayToPlaceDOM(arrayShips[0]);
     } else {
-      console.log(`Can't place ship there.`); //TODO: Something in DOM
+      console.log(`Can't place ship there.`); // TODO: Something in DOM
     }
   };
 
@@ -85,7 +86,7 @@ const game = (() => {
           if (boardP2.areAllShipsSunk()) {
             showWinner(player1.name);
             toggleFreeze("P2");
-            return; // TODO: Option to restart the game
+            return;
           }
         }
         game.turn(player2);
@@ -126,6 +127,9 @@ const game = (() => {
     resetBoards();
     toggleOptions();
     displayToPlaceDOM(arrayShips[0]);
+    toggleFreeze("P1");
+    boardP2.placeShipsRandomly(boardP2, arrayShips);
+    console.table(boardP2);
   };
 
   return { prepare, prepareShip, turn, sendAttack, reset };
