@@ -1,5 +1,6 @@
 // TODO: Sometimes, the win condition doesnt work, or fires too early
-// TODO: Check for random ship allocated correctly
+//       => check receiveAttack function
+// TODO: Sometimes, one ship shot will get two shot, only when my ship's board get shot
 
 import {
   displayToPlaceDOM,
@@ -34,10 +35,14 @@ const arrayShips = [carrier, battleship, destroyer, submarine, patrolBoat];
 const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
-
-    boardP2.placeShip(0, submarine, "Horizontal");
-    //boardP2.placeShipsRandomly(boardP2, arrayShips);
-
+    /*
+    boardP2.placeShip(0, carrier, "Horizontal");
+    boardP2.placeShip(90, battleship, "Horizontal");
+    boardP2.placeShip(30, destroyer, "Vertical");
+    boardP2.placeShip(39, submarine, "Vertical");
+    */
+    boardP2.placeShipsRandomly(boardP2, arrayShips);
+    console.log(boardP2);
     placeAllShipsDOM(boardP1);
   };
 

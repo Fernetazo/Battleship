@@ -53,7 +53,7 @@ function showWinner(player) {
 function placeShipDOM(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
-  const orientation = document.querySelector(".orientationButton").textContent; //TODO: Should add a DOM button for user select mode, vertical or horizontal
+  const orientation = document.querySelector(".orientationButton").textContent;
   game.prepareShip(grid.indexOf(cell), orientation);
 }
 
@@ -61,7 +61,7 @@ function clickCell(e) {
   const cell = e.target;
   const grid = Array.from(cell.parentNode.children);
 
-  // TODO: This should be in logic part
+  // TODO: This should be in logic part (...but, it is faster here...)
   if (cell.classList[1] == "unknown") {
     game.sendAttack(grid.indexOf(cell));
   }

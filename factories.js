@@ -56,15 +56,13 @@ const Gameboard = () => {
   };
 
   board.placeShip = (cell, ship, orientation) => {
-    if (board.isPlaceable(cell, ship, orientation)) {
-      if (orientation === "Horizontal") {
-        for (let i = 0; i < ship.size; i++) {
-          board[cell + i] = ship;
-        }
-      } else {
-        for (let i = 0; i < ship.size; i++) {
-          board[cell + i * 10] = ship;
-        }
+    if (orientation === "Horizontal") {
+      for (let i = 0; i < ship.size; i++) {
+        board[cell + i] = ship;
+      }
+    } else {
+      for (let i = 0; i < ship.size; i++) {
+        board[cell + i * 10] = ship;
       }
     }
   };
@@ -148,23 +146,31 @@ const Gameboard = () => {
     let randomOri = Math.floor(Math.random() * 2);
     let randomCell = Math.floor(Math.random() * 100);
 
-    for (let i = 0; i <= 4; i++) {
-      while (
-        !board.isPlaceable(randomCell, arrayShips[i], orientation[randomOri])
+    let i = 0;
+    while (i <= 4) {
+      if (
+        board.isPlaceable(randomCell, arrayShips[i], orientation[randomOri])
       ) {
+        board.placeShip(randomCell, arrayShips[i], orientation[randomOri]);
+        i++;
+      } else {
         randomOri = Math.floor(Math.random() * 2);
         randomCell = Math.floor(Math.random() * 100);
       }
-      board.placeShip(randomCell, arrayShips[i], orientation[randomOri]);
     }
   };
 
   board.receiveAttack = (cell) => {
     let position = 0;
     let i = 1;
-    const leftSizeofBoard = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    const leftSideBoard = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+
     // HORIZONTAL
-    if (!leftSizeofBoard.includes(cell) && board[cell - i]) {
+    if (
+      !leftSideBoard.includes(cell) &&
+      board[cell - i] != null &&
+      board[cell - i] != "w"
+    ) {
       while (
         board[cell - i] != undefined &&
         board[cell].type == board[cell - i].type
@@ -172,7 +178,12 @@ const Gameboard = () => {
         position++;
         i++;
       }
-    } else if (cell >= 10 && board[cell - i * 10]) {
+      // VERTICAL
+    } else if (
+      cell >= 10 &&
+      board[cell - i * 10] != null &&
+      board[cell - i * 10] != "w"
+    ) {
       while (
         board[cell - i * 10] != undefined &&
         board[cell].type == board[cell - i * 10].type
@@ -187,6 +198,7 @@ const Gameboard = () => {
   };
 
   board.areAllShipsSunk = () => {
+    console.log(board);
     for (let i = 0; i <= 99; i++) {
       if (board[i] != null && board[i] != "w") {
         if (board[i].isSunk() == false) {
