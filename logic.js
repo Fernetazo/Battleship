@@ -24,25 +24,27 @@ const boardP2 = Gameboard();
 const player1 = Player("Player 1", true);
 const player2 = Player("CPU", false);
 
-const carrier = Ship(5, "carrier");
-const battleship = Ship(4, "battleship");
-const destroyer = Ship(3, "destroyer");
-const submarine = Ship(2, "submarine");
-const patrolBoat = Ship(1, "patrolBoat");
+const arrayShips = [
+  Ship(5, "carrier"),
+  Ship(4, "battleship"),
+  Ship(3, "destroyer"),
+  Ship(2, "submarine"),
+  Ship(1, "patrolBoat"),
+];
 
-const arrayShips = [carrier, battleship, destroyer, submarine, patrolBoat];
+const arrayShipsCPU = [
+  Ship(5, "carrier"),
+  Ship(4, "battleship"),
+  Ship(3, "destroyer"),
+  Ship(2, "submarine"),
+  Ship(1, "patrolBoat"),
+];
 
 const game = (() => {
   const prepare = () => {
     prepareCellsListenersDOM();
-    /*
-    boardP2.placeShip(0, carrier, "Horizontal");
-    boardP2.placeShip(90, battleship, "Horizontal");
-    boardP2.placeShip(30, destroyer, "Vertical");
-    boardP2.placeShip(39, submarine, "Vertical");
-    */
-    boardP2.placeShipsRandomly(boardP2, arrayShips);
-    console.log(boardP2);
+
+    boardP2.placeShipsRandomly(boardP2, arrayShipsCPU);
     placeAllShipsDOM(boardP1);
   };
 
@@ -93,32 +95,40 @@ const game = (() => {
         }
         game.turn(player2);
         toggleFreeze("P2");
+
+        setTimeout(() => {
+          let CPUPlay = player2.CPUplay(boardP1);
+
+          if (boardP1[CPUPlay] === null) {
+            boardP1[CPUPlay] = "w";
+            receiveAttackDOM("P1", CPUPlay, "w");
+          } else if (boardP1[CPUPlay].type) {
+            boardP1.receiveAttack(CPUPlay);
+            receiveAttackDOM("P1", CPUPlay);
+            if (boardP1.areAllShipsSunk()) {
+              showWinner(player2.name);
+              return;
+            }
+          }
+          game.turn(player1);
+          toggleFreeze("P2");
+        }, 1000);
       }
     }
-    setTimeout(() => {
-      let CPUPlay = player2.CPUplay(boardP1);
-
-      if (boardP1[CPUPlay] === null) {
-        boardP1[CPUPlay] = "w";
-        receiveAttackDOM("P1", CPUPlay, "w");
-      } else if (boardP1[CPUPlay].type) {
-        boardP1.receiveAttack(CPUPlay);
-        receiveAttackDOM("P1", CPUPlay);
-        if (boardP1.areAllShipsSunk()) {
-          showWinner(player2.name);
-          return;
-        }
-      }
-      game.turn(player1);
-      toggleFreeze("P2");
-    }, 500);
   };
 
   const reset = () => {
-    arrayShips.push(carrier, battleship, destroyer, submarine, patrolBoat);
+    arrayShips.push(
+      Ship(5, "carrier"),
+      Ship(4, "battleship"),
+      Ship(3, "destroyer"),
+      Ship(2, "submarine"),
+      Ship(1, "patrolBoat")
+    );
 
     for (let i = 0; i <= 4; i++) {
       arrayShips[i].hits = [];
+      arrayShipsCPU[i].hits = [];
     }
 
     boardP1.reset();
@@ -130,8 +140,7 @@ const game = (() => {
     toggleOptions();
     displayToPlaceDOM(arrayShips[0]);
     toggleFreeze("P1");
-    boardP2.placeShipsRandomly(boardP2, arrayShips);
-    console.table(boardP2);
+    boardP2.placeShipsRandomly(boardP2, arrayShipsCPU);
   };
 
   return { prepare, prepareShip, turn, sendAttack, reset };

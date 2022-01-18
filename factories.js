@@ -7,8 +7,6 @@ const Ship = (size, type) => {
   ship.type = type;
 
   ship.hit = (position) => {
-    //console.log("ship.size: ", ship.size);
-    //console.log("ship.hits.length: ", ship.hits.length);
     if (!ship.hits.includes(position)) {
       ship.hits.push(position);
     }
@@ -192,17 +190,12 @@ const Gameboard = () => {
         i++;
       }
     }
-
     board[cell].hit(position);
-    return true;
   };
 
   board.areAllShipsSunk = () => {
-    console.log(board);
     for (let i = 0; i <= 99; i++) {
       if (board[i] != null && board[i] != "w") {
-        if (board[i].isSunk() == false) {
-        }
         if (board[i].isSunk() == false) {
           return false;
         }
