@@ -1,20 +1,59 @@
 body {
-  background-color: grey;
+  margin: 0;
+  padding: 20px;
+  height: max-content;
+  width: max-content;
+  text-align: center;
+  background-color: rgb(68, 68, 68);
+  font-family: "supersubmarine";
+  color: white;
+}
+
+@font-face {
+  font-family: "supersubmarinehalf";
+  src: url("supersubmarinehalf.woff2") format("woff2"),
+    url("supersubmarinehalf.woff") format("woff");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "supersubmarine";
+  src: url("supersubmarine.woff2") format("woff2"),
+    url("supersubmarine.woff") format("woff");
+  font-style: normal;
+}
+
+.mainTitle {
+  font-family: "supersubmarinehalf";
+  font-size: 60px;
+  height: 100px;
+}
+
+.display {
+  font-size: 30px;
+  height: 100px;
 }
 
 .playerIndicatorContainer {
   display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  height: 30px;
 }
 
 .gridsContainer {
   display: flex;
+  justify-content: space-between;
+  height: 360px;
+  width: 850px;
 }
 
 .gridContainer {
+  height: 350px;
+  width: 350px;
   display: grid;
-  grid-template-columns: repeat(10, 20px);
-  grid-template-rows: repeat(10, 20px);
-  border: solid black 1px;
+  grid-template-columns: repeat(10, 35px);
+  grid-template-rows: repeat(10, 35px);
 }
 
 .cell {
@@ -22,27 +61,32 @@ body {
   justify-content: center;
   align-items: center;
   border: solid black 1px;
+  margin: 1px;
+  transition: all 0.6s;
+}
+
+.P2 > .cell {
+  border: solid rgb(25, 230, 25) 0.5px;
 }
 
 .unknown {
-  background-color: rgb(34, 92, 7);
+  background-color: rgb(30, 82, 6);
 }
 
 .touched {
-  background: yellow;
   background: radial-gradient(
     circle,
-    yellow 25%,
-    rgb(34, 92, 7) 50%,
-    rgb(34, 92, 7) 100%
+    rgb(25, 230, 25) 25%,
+    rgb(30, 82, 6) 50%,
+    rgb(30, 82, 6) 100%
   );
 }
 
 .touchedP1 {
-  background: red;
   background: radial-gradient(
     circle,
-    red 25%,
+    yellow 5%,
+    red 40%,
     rgb(39, 133, 226) 50%,
     rgb(39, 133, 226) 100%
   );
@@ -52,8 +96,12 @@ body {
   background-color: rgb(39, 133, 226);
 }
 
+.P2 > .water {
+  background-color: rgb(23, 61, 5);
+}
+
 .shot {
-  background-color: rgb(250, 142, 0);
+  background-color: rgb(16, 97, 179);
 }
 
 .carrier,
@@ -61,25 +109,14 @@ body {
 .destroyer,
 .submarine,
 .patrolBoat {
-  border: solid 2px yellow;
-}
-
-.carrier {
   background-color: rgba(128, 128, 128, 1);
+  border: solid 1px white;
 }
 
-.battleship {
-  background-color: rgba(131, 69, 69, 0.8);
-}
-
-.destroyer {
-  background-color: rgba(129, 93, 63, 0.6);
-}
-
-.submarine {
-  background-color: rgba(69, 128, 78, 0.4);
-}
-
-.patrolBoat {
-  background-color: rgba(114, 56, 128, 0.568);
+.carrier.touchedP1,
+.battleship.touchedP1,
+.destroyer.touchedP1,
+.submarine.touchedP1,
+.patrolBoat.touchedP1 {
+  border: solid black 1px;
 }
