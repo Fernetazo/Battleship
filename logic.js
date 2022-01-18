@@ -1,6 +1,4 @@
-// TODO: Sometimes, the win condition doesnt work, or fires too early
-//       => check receiveAttack function
-// TODO: Sometimes, one ship shot will get two shot, only when my ship's board get shot
+// TODO: Hard AI
 
 import {
   displayToPlaceDOM,
@@ -105,6 +103,7 @@ const game = (() => {
           } else if (boardP1[CPUPlay].type) {
             boardP1.receiveAttack(CPUPlay);
             receiveAttackDOM("P1", CPUPlay);
+            boardP1[CPUPlay].locations.push(CPUPlay);
             if (boardP1.areAllShipsSunk()) {
               showWinner(player2.name);
               return;
@@ -112,7 +111,7 @@ const game = (() => {
           }
           game.turn(player1);
           toggleFreeze("P2");
-        }, 1000);
+        }, 50);
       }
     }
   };

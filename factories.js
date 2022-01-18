@@ -5,6 +5,7 @@ const Ship = (size, type) => {
   ship.size = size;
   ship.hits = [];
   ship.type = type;
+  ship.locations = [];
 
   ship.hit = (position) => {
     if (!ship.hits.includes(position)) {
@@ -28,7 +29,14 @@ const Player = (name, isHuman) => {
 
   player.CPUplay = (board) => {
     let CPUOptions = board.reduce((array, cell, index) => {
-      if (cell != "w") {
+      if (cell == null) {
+        array.push(index);
+        // Checks for cell with ship that doesn't have been shot
+      } else if (
+        cell != null &&
+        cell != "w" &&
+        !cell.locations.includes(index)
+      ) {
         array.push(index);
       }
       return array;
@@ -191,6 +199,8 @@ const Gameboard = () => {
       }
     }
     board[cell].hit(position);
+
+    console.log(board);
   };
 
   board.areAllShipsSunk = () => {
@@ -203,6 +213,8 @@ const Gameboard = () => {
     }
     return true;
   };
+
+  board.isShot = (cell) => {};
 
   return board;
 };
