@@ -28,7 +28,7 @@ const arrayShips = [
   Ship(4, "battleship"),
   Ship(3, "destroyer"),
   Ship(2, "submarine"),
-  Ship(1, "patrolBoat"),
+  Ship(1, "boat"),
 ];
 
 const arrayShipsCPU = [
@@ -36,7 +36,7 @@ const arrayShipsCPU = [
   Ship(4, "battleship"),
   Ship(3, "destroyer"),
   Ship(2, "submarine"),
-  Ship(1, "patrolBoat"),
+  Ship(1, "boat"),
 ];
 
 const game = (() => {
@@ -59,7 +59,6 @@ const game = (() => {
 
         toggleOptions();
         game.turn(player1);
-
         return;
       }
       displayToPlaceDOM(arrayShips[0]);
@@ -112,7 +111,7 @@ const game = (() => {
           }
           game.turn(player1);
           toggleFreeze("P2");
-        }, 50);
+        }, 800);
       }
     }
   };
@@ -123,7 +122,7 @@ const game = (() => {
       Ship(4, "battleship"),
       Ship(3, "destroyer"),
       Ship(2, "submarine"),
-      Ship(1, "patrolBoat")
+      Ship(1, "boat")
     );
 
     for (let i = 0; i <= 4; i++) {

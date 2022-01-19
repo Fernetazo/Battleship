@@ -199,8 +199,6 @@ const Gameboard = () => {
       }
     }
     board[cell].hit(position);
-
-    console.log(board);
   };
 
   board.areAllShipsSunk = () => {

@@ -2,11 +2,17 @@ body {
   margin: 0;
   padding: 20px;
   height: max-content;
-  width: max-content;
   text-align: center;
-  background-color: rgb(68, 68, 68);
   font-family: "supersubmarine";
-  color: white;
+  color: rgba(255, 255, 255, 0.87);
+  background-attachment: fixed;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(8, 8, 100) 35%,
+    rgb(0, 153, 255) 100%
+  );
 }
 
 @font-face {
@@ -24,36 +30,52 @@ body {
 }
 
 .mainTitle {
+  display: flex;
   font-family: "supersubmarinehalf";
-  font-size: 60px;
+  color: rgb(178, 34, 34);
+  font-size: 80px;
   height: 100px;
+  align-items: center;
+  justify-content: center;
 }
 
 .display {
+  display: flex;
   font-size: 30px;
-  height: 100px;
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameOver {
+  color: rgb(178, 34, 34);
 }
 
 .playerIndicatorContainer {
+  color: rgba(178, 34, 34, 0.87);
   display: flex;
   font-size: 20px;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 30px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .gridsContainer {
   display: flex;
-  justify-content: space-between;
-  height: 360px;
-  width: 850px;
+  justify-content: space-around;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .gridContainer {
-  height: 350px;
-  width: 350px;
   display: grid;
-  grid-template-columns: repeat(10, 35px);
-  grid-template-rows: repeat(10, 35px);
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+}
+
+.gridContainer.P2 {
+  cursor: crosshair;
 }
 
 .cell {
@@ -62,7 +84,7 @@ body {
   align-items: center;
   border: solid black 1px;
   margin: 1px;
-  transition: all 0.6s;
+  transition: all 0.4s;
 }
 
 .P2 > .cell {
@@ -72,7 +94,7 @@ body {
 .unknown {
   background-color: rgb(30, 82, 6);
 }
-
+/*
 .touched {
   background: radial-gradient(
     circle,
@@ -81,7 +103,7 @@ body {
     rgb(30, 82, 6) 100%
   );
 }
-
+*/
 .touchedP1 {
   background: radial-gradient(
     circle,
@@ -101,14 +123,14 @@ body {
 }
 
 .shot {
-  background-color: rgb(16, 97, 179);
+  background-color: rgb(16, 90, 165);
 }
 
 .carrier,
 .battleship,
 .destroyer,
 .submarine,
-.patrolBoat {
+.boat {
   background-color: rgba(128, 128, 128, 1);
   border: solid 1px white;
 }
@@ -117,6 +139,71 @@ body {
 .battleship.touchedP1,
 .destroyer.touchedP1,
 .submarine.touchedP1,
-.patrolBoat.touchedP1 {
+.boat.touchedP1 {
   border: solid black 1px;
+}
+
+.resetButton {
+  margin-left: 50px;
+}
+
+button {
+  font-family: "supersubmarine";
+  background-color: firebrick;
+  box-shadow: 2px 2px black;
+  color: white;
+  height: 40px;
+  width: 100px;
+  transition: all 0.3s;
+}
+
+button:hover {
+  border: solid 3px white;
+}
+
+button:active {
+  background-color: white;
+  color: firebrick;
+  box-shadow: 0px 0px;
+  transform: scale(0.9);
+}
+
+footer {
+  margin-top: 61px;
+}
+
+h5 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  padding-left: 10px;
+}
+
+.touched {
+  background: radial-gradient(
+    circle,
+    rgb(25, 230, 25) 25%,
+    rgb(30, 82, 6) 50%,
+    rgb(30, 82, 6) 100%
+  );
+  box-shadow: 0 0 0 0 rgba(25, 230, 25, 1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(25, 230, 25, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(25, 230, 25, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 230, 25, 0);
+  }
 }

@@ -42,10 +42,12 @@ function displayTurn(player) {
 
 function showWinner(player) {
   const display = document.querySelector(".display");
+  display.classList.add("gameOver");
   display.textContent = `The winner is ${player}!`;
 
   const resetButton = document.createElement("button");
   resetButton.textContent = "Reset game";
+  resetButton.classList.add("resetButton");
   resetButton.addEventListener("click", game.reset);
   display.appendChild(resetButton);
 }
@@ -84,6 +86,9 @@ function placeAllShipsDOM(board) {
 }
 
 function resetBoards() {
+  const display = document.querySelector(".display");
+  display.classList.remove("gameOver");
+
   const grid = document.getElementsByClassName("gridContainer");
   let cells;
 
@@ -130,9 +135,11 @@ function receiveAttackDOM(player, cell, water) {
 
 function toggleFreeze(playerBoard) {
   let board = document.querySelector(`.gridContainer.${playerBoard}`);
-  board.style.pointerEvents == "none"
-    ? (board.style.pointerEvents = "auto")
-    : (board.style.pointerEvents = "none");
+  if (board.style.pointerEvents == "none") {
+    board.style.pointerEvents = "auto";
+  } else {
+    board.style.pointerEvents = "none";
+  }
 }
 
 export {
